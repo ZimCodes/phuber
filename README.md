@@ -1,5 +1,5 @@
 ## How to Use:
-To retrieve video links from the regular site:
+To retrieve video links for search term *happiness and joy*:
 ```
 python phuber.py "happiness and joy" 
 ```
