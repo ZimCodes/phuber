@@ -21,7 +21,7 @@ Number of pages to scrape. Default: *1*
 
 Name of output file.  Default: *list.txt*
 
-**-x / --premium *"user:pass"***
+**-x / --premium *"username:password"***
 
 The login credentials to use when scraping premium pages.  <username:password> format
 ```
