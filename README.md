@@ -37,11 +37,11 @@ Retrieve only premium videos. *(must have premium account)*
 
 **-i / --include *"category"***
 
-The category to filter into the search
+The category to filter into the search. *See list of categories below*
 
 **-e / --exclude *"[category, ...]"***
 
-The category(ies) to remove from the search **(max=10)**.
+The category(ies) to remove from the search **(max=10)**. *See list of categories below*
 ``` 
 python phuber.py -e "cat1,cat2,cat3,cat4" "search term"
 ``` 
