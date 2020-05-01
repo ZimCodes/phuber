@@ -37,11 +37,11 @@ Retrieve only premium videos. *(must have premium account)*
 
 **-i / --include *"category"***
 
-The category to filter into the search. **See list of categories below*
+The category to filter into the search. *_See list of categories below_
 
 **-e / --exclude *"[category, ...]"***
 
-The category(ies) to remove from the search **(max=10)**. **See list of categories below*
+The category(ies) to remove from the search **(max=10)**. *_See list of categories below_
 ``` 
 python phuber.py -e "cat1,cat2,cat3,cat4" "search term"
 ``` 
@@ -81,7 +81,7 @@ Column #1 | Column #2 | Column #3 | Column #4 | Column #5 |
 bbw *(big busty women)*| babe| babysitter| btscenes *(behind the scenes)*| bigass|
 bigdick | titslg *(big tits)*|bimale|blonde|bj *(blowjob)*|
 bondage | brazilian | british | brunette|bukkake|
-cartoon|casting|celeb|cc|college|
+cartoon|casting|celeb|cc *(closed caption)*|college|
 comp *(compilation)*|cosplay|creampie|cuckold|cumshot|
 czech|described|dp|ebony|euro|
 exclusive|feet|femaleorgy *(female orgasm)*|fetish|fisting|
