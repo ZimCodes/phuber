@@ -101,10 +101,10 @@ vr *(virtual reality)*| webcam
 
 
 ## Epilogue
-All scraped urls are dumped into the *list_name* file which can then be used with youtube-dl
+All scraped urls are dumped into the *list_name* file which can then be used with youtube-dl or any other video downloader.
 
 Example:
 
     youtube-dl -a list.txt
     
-This command will download best quality videos from the *list_name* file
+This command will download videos from the *list_name* file.
