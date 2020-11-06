@@ -1,3 +1,9 @@
+# Phuber
+
+**Phuber** allows you to retrieve video links from PornHub.
+
+For ease of use, try the command-line configurator for this tool [here](https://zimtools.xyz/zphuber) 
+
 ## How to Use:
 To retrieve video links for search term *happiness and joy*:
 ```
