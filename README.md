@@ -72,7 +72,7 @@ Maximum length of videos. Choices: *[10,20,30]*
 List of all available categories to filter through *"(what keyword mean)"*
 
 ```
-python phuber.py --category-list ""
+python phuber.py --category-list
 ```
 **-v / --verbose**
 
