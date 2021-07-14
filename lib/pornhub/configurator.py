@@ -1,7 +1,4 @@
 class Configurator:
-    def __init__(self):
-        pass
-    
     @staticmethod
     def include_url_converter(include, categories):
         """

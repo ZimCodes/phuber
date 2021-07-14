@@ -1,17 +1,21 @@
-from .parser import Parser
+from .checker import Checker
 import os, requests
 from bs4 import BeautifulSoup
 from .configurator import Configurator
+from lib.abstract_scraper import AbstractScraper
 
 
-class Scraper:
+class Scraper(AbstractScraper):
+    def __init__(self, args=None):
+        self.args = Checker(args).args if args else None
 
-    def __init__(self):
-        self.parser = Parser().args
+    def late_init(self, args):
+        self.args = Checker(args).args
+        return self
 
     def scrape_web(self, session, domain):
         """
-        Scrape the video links from the search results.
+        Scrape video links from search results.
         :param session: the current connection to the website
         :param domain: the website domain
         list_name: the file name to use when exporting the list of video links
@@ -26,40 +30,38 @@ class Scraper:
         max: maximum length of the videos
         :return: None
         """
-        if os.path.exists(self.parser.listname):
-            os.remove(self.parser.listname)
+        if os.path.exists(self.args.listname):
+            os.remove(self.args.listname)
 
-        full_list = open(self.parser.listname, 'w')
+        with open(self.args.listname, 'w') as full_list:
+            search_prefix = '/video/search?search='
+            search = self.args.search.replace(" ", "+")
+            page_number_cat = '&page='
+            sub_url = domain + search_prefix + search + page_number_cat
 
-        search_prefix = '/video/search?search='
-        search = self.parser.search.replace(" ", "+")
-        page_number_cat = '&page='
-        sub_url = domain + search_prefix + search + page_number_cat
+            page_range = range(1, self.args.pages + 1)
 
-        page_range = range(1, self.parser.pages + 1)
+            for current_page in page_range:
+                url = sub_url + str(current_page) + Configurator.production_filter(self.args.prod) + \
+                      Configurator.duration_filter(self.args.min, self.args.max) \
+                      + Configurator.search_filters_cat(self.args.premium_only, self.args.include, self.args.exclude,
+                                                        Checker.category_codes)
+                print(url)
+                req = session.get(url)
+                soup = BeautifulSoup(req.text, 'html.parser')
+                found_links = soup.select("div.thumbnail-info-wrapper span.title")
+                vid_urls = []
 
-        for current_page in page_range:
-            url = sub_url + str(current_page) + Configurator.production_filter(self.parser.prod) + \
-                  Configurator.duration_filter(self.parser.min, self.parser.max) \
-                  + Configurator.search_filters_cat(self.parser.premium_only, self.parser.include, self.parser.exclude,
-                                                    Parser.category_codes)
-            print(url)
-            req = session.get(url)
-            soup = BeautifulSoup(req.text, 'html.parser')
-            found_links = soup.select("div.thumbnail-info-wrapper span.title")
-            vid_urls = []
+                for current_link in found_links:
+                    for video_found in current_link.find_all('a', {"class": ""}):
+                        video_url = video_found.get('href')
+                        if video_url and ":void(0)" not in video_url:
+                            if self.args.verbose:
+                                print(video_found.get('title'))
+                            vid_urls.append(domain + video_url)
 
-            for current_link in found_links:
-                for video_found in current_link.find_all('a', {"class": ""}):
-                    vids = video_found.get('href')
-                    if vids:
-                        if self.parser.verbose:
-                            print(video_found.get('title'))
-                        vid_urls.append(domain + vids)
-
-            separator = '\n'
-            print(separator.join(vid_urls), file=full_list)
-        full_list.close()
+                separator = '\n'
+                print(separator.join(vid_urls), file=full_list)
 
     def __pornhub(self, session):
         """
@@ -76,7 +78,7 @@ class Scraper:
         :param session: the current connection to the website
         :return: None
         """
-        username, password = self.parser.premium.split(':')
+        username, password = self.args.premium.split(':')
         domain = 'https://www.pornhubpremium.com'
         self.__premium_login(session, domain, username, password)
         self.scrape_web(session, domain)
@@ -138,16 +140,16 @@ class Scraper:
         :return: None
         """
         # If specified, show all categories
-        if self.parser.category_list is True:
-            Parser.print_categories()
+        if self.args.category_list is True:
+            Checker.print_categories()
             return
 
-        # Must have search term
-        if not self.parser.search:
+        # Must have search term to proceed scraping
+        if not self.args.search:
             return
 
         session = requests.Session()
-        if self.parser.premium:
+        if self.args.premium:
             self.__pornhub_premium(session)
         else:
             self.__pornhub(session)

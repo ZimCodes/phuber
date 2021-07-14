@@ -1,7 +1,9 @@
-from phuber import cmdParser
+from ..command.args_checker import ArgsChecker
+import argparse
 
 
-class Parser(cmdParser.Parser):
+class Checker(ArgsChecker):
+    """Checks & modifies the commandline arguments received"""
     category_codes = {
         '60fps': '150',
         'amateur': '3',
@@ -107,37 +109,9 @@ class Parser(cmdParser.Parser):
         'webcam': '178'
     }
 
-    def __init__(self):
-        super().__init__('PornHub Link Scrapper')
+    def __init__(self, phuber_args):
+        super().__init__(phuber_args)
 
-    def setup(self):
-        self.parser.add_argument('search', metavar="search terms",
-                                 help='Search Term (in quotations)', nargs='?')
-        self.parser.add_argument('-p', '--pages', type=int,
-                                 help='# of pages to scrape')
-        self.parser.add_argument('-l', '--listname',
-                                 help='Custom list name (defaults to list.txt)')
-        self.parser.add_argument('-x', '--premium',
-                                 help='Use premium account, will require username and password in <username:password> '
-                                      'format')
-        self.parser.add_argument('-v', '--verbose', action='store_true',
-                                 help='Prints titles to console so you know what you\'re grabbing')
-        self.parser.add_argument('--premium-only', action="store_true",
-                                 help='Retrieve only premium videos. (must have premium account)')
-        self.parser.add_argument('-i', '--include',
-                                 help='The category to filter into the search')
-        self.parser.add_argument('-e', '--exclude',
-                                 help='the categories to remove from the search(max=10). Example: "cat1,cat2,cat3,cat4"')
-        self.parser.add_argument('--category-list', action="store_true",
-                                 help='list of all available categories to filter through "(what keyword mean)"')
-        self.parser.add_argument('--prod', choices=['home', 'pro'],
-                                 help="production of the video")
-        self.parser.add_argument('--min', '--min-dur', type=int, choices=[10, 20, 30],
-                                 help='Minimum length of videos')
-        self.parser.add_argument('--max', '--max-dur', type=int, choices=[10, 20, 30],
-                                 help='Maximum length of videos')
-        self.args = self.parser.parse_args()
-        
     def arg_errors(self):
         """
         Check if there are any errors from user input
@@ -148,14 +122,11 @@ class Parser(cmdParser.Parser):
         show_category_list: display list of available categories to use while filtering
         :return: None
         """
-        if not self.args.search and not self.args.category_list:
-            self.args.parser.error('Search Term Needed!')
         if not self.args.premium and self.args.premium_only:
-            self.args.parser.error("Must login to premium account to use '--premium-only' option!")
+            raise argparse.ArgumentError("Must login to premium account to use '--premium-only' option!")
 
     def arg_checks(self):
         self.__page_check()
-        self.__file_check()
 
     def __page_check(self):
         """
@@ -165,14 +136,6 @@ class Parser(cmdParser.Parser):
         if not self.args.pages:
             self.args.pages = 1
 
-    def __file_check(self):
-        """
-        Creates an new empty file
-        :return: None
-        """
-        if not self.args.listname:
-            self.args.listname = "list.txt"
-
     @staticmethod
     def print_categories():
         """
@@ -181,23 +144,28 @@ class Parser(cmdParser.Parser):
         """
         category_list = ['60fps', 'amateur', 'anal', 'arab', 'asian', 'bbw(big busty women)', 'babe', 'babysitter',
                          'btscenes(behind the scenes)',
-                         'bigass', 'bigdick', 'titslg(big tits)', 'bimale', 'blonde', 'bj(blowjob)', 'bondage', 'brazilian',
+                         'bigass', 'bigdick', 'titslg(big tits)', 'bimale', 'blonde', 'bj(blowjob)', 'bondage',
+                         'brazilian',
                          'british', 'brunette',
                          'bukkake', 'cartoon', 'casting', 'celeb', 'cc', 'college', 'comp(compilation)', 'cosplay',
                          'creampie', 'cuckold',
                          'cumshot', 'czech', 'described', 'dp', 'ebony', 'euro', 'exclusive', 'feet',
                          'femaleorgy(female orgasm)',
-                         'fetish', 'fisting', 'french', 'funny', 'gangbang', 'gay', 'german', 'hd', 'handjob', 'hardcore',
+                         'fetish', 'fisting', 'french', 'funny', 'gangbang', 'gay', 'german', 'hd', 'handjob',
+                         'hardcore',
                          'hentai',
                          'indian', 'interactive', 'interracial', 'italian', 'japanese', 'korean', 'latina', 'lesbian',
                          'milf', 'massage',
-                         'masturbate', 'mature', 'musclemen', 'music', 'oldyoung', 'orgy', 'pov', 'parody', 'party', 'piss',
+                         'masturbate', 'mature', 'musclemen', 'music', 'oldyoung', 'orgy', 'pov', 'parody', 'party',
+                         'piss',
                          'popww(popular with women)', 'pornstar', 'public', 'pussylick', 'reality', 'redhead',
                          'rp(roleplay)',
-                         'romantic', 'rough', 'russian', 'sfw(safe for work)', 'school', 'titssm(small tits)', 'smoking',
+                         'romantic', 'rough', 'russian', 'sfw(safe for work)', 'school', 'titssm(small tits)',
+                         'smoking',
                          'solofemale',
                          'solomale',
-                         'squirt', 'step(step fantasy)', 'strip(striptease)', 'tatwomen(tatooed women)', 'teen', '3some',
+                         'squirt', 'step(step fantasy)', 'strip(striptease)', 'tatwomen(tatooed women)', 'teen',
+                         '3some',
                          'toys',
                          'tmale(transmale)', 'twgirl(trans with girl)', 'twguy(trans with guy)', 'trans(transgender)',
                          'veramateurs(verified amateurs)', 'vercouples(verified couples)', 'vermodels(verified models)',

@@ -1,13 +1,14 @@
 # Phuber
 
-**Phuber** allows you to retrieve video links from PornHub.
+**Phuber** allows you to retrieve video links primarily from Pornhub. *With recent changes, more sites
+will also be support
 
 For ease of use, try the command-line configurator for this tool [here](https://zimtools.xyz/phuber) 
 
 ## How to Use:
 To retrieve video links for search term *happiness and joy*:
 ```
-python phuber.py "happiness and joy" 
+python phuber.py pornhub "happiness and joy" 
 ```
 ## Positional:
 **search terms(REQUIRED)**
@@ -31,7 +32,7 @@ Name of output file.  Default: *list.txt*
 
 The login credentials to use when scraping premium pages.  <username:password> format
 ```
- python phuber.py --premium "username:password" "search term"
+python phuber.py pornhub --premium "username:password" "search term"
 ```
 
 ### Filters
@@ -49,7 +50,7 @@ The category to filter into the search. *_See list of categories below_
 
 The category(ies) to remove from the search **(max=10)**. *_See list of categories below_
 ``` 
-python phuber.py -e "cat1,cat2,cat3,cat4" "search term"
+python phuber.py pornhub -e "cat1,cat2,cat3,cat4" "search term"
 ``` 
 
 **--prod *"type"***
@@ -72,7 +73,7 @@ Maximum length of videos. Choices: *[10,20,30]*
 List of all available categories to filter through *"(what keyword mean)"*
 
 ```
-python phuber.py --category-list
+python phuber.py pornhub --category-list
 ```
 **-v / --verbose**
 
