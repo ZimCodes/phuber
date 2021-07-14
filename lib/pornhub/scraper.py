@@ -45,7 +45,8 @@ class Scraper(AbstractScraper):
                 url = sub_url + str(current_page) + Configurator.production_filter(self.args.prod) + \
                       Configurator.duration_filter(self.args.min, self.args.max) \
                       + Configurator.search_filters_cat(self.args.premium_only, self.args.include, self.args.exclude,
-                                                        Checker.category_codes)
+                                                        Checker.category_codes) \
+                      + Configurator.order_filter(self.args.order, self.args.order_time)
                 print(url)
                 req = session.get(url)
                 soup = BeautifulSoup(req.text, 'html.parser')

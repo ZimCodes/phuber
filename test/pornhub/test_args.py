@@ -12,17 +12,17 @@ class TestArgument:
     def test_all_commands(self, phuber):
         result = {"search": "happiness", "pages": 2, "listname": "save", "premium": "username:password",
                   "verbose": False, "premium_only": True, "include": "cc", "exclude": "hd,exclusive,comp,cartoon",
-                  "category_list": False, "prod": "home", "min": 10, "max": 20}
+                  "category_list": False, "prod": "home", "min": 10, "max": 20, "order": "top", "order_time": "daily"}
 
         assert phuber.get_args("pornhub", result['search'], "--pages=2", "-l=save", "-x=username:password",
                                "--premium-only", "-i=cc", "-e=hd,exclusive,comp,cartoon", "--prod=home", "--min=10",
-                               "--max=20") == get_namespace(**result)
+                               "--max=20", "--order=top", "--order-time=daily") == get_namespace(**result)
 
 
 def get_namespace(**kwg):
     namespace = {"search": None, "pages": None, "listname": "list.txt", "premium": None, "verbose": False,
                  "premium_only": False, "include": None, "exclude": None, "category_list": False, "prod": None,
-                 "min": None, "max": None}
+                 "min": None, "max": None, "order": None, "order_time": None}
     result = namespace | kwg
     return argparse.Namespace(**result)
 

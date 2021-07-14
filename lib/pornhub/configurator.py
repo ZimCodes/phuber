@@ -1,5 +1,33 @@
 class Configurator:
     @staticmethod
+    def order_filter(order, time):
+        result = ''
+        if order == "viewed":
+            result += '&o=mv'
+            if time:
+                result += Configurator.__time_filter(time)
+        elif order == 'longest':
+            result += '&o=lg'
+        elif order == 'top':
+            result += '&o=tr'
+            if time:
+                result += Configurator.__time_filter(time)
+        elif order == 'recent':
+            result += '&o=mr'
+        return result
+
+    @staticmethod
+    def __time_filter(time):
+        if time == 'yearly':
+            return '&t=y'
+        elif time == 'monthly':
+            return '&t=m'
+        elif time == 'weekly':
+            return '&t=w'
+        elif time == 'daily':
+            return '&t=t'
+
+    @staticmethod
     def include_url_converter(include, categories):
         """
         Convert category specified by the user into one that can be used by the url

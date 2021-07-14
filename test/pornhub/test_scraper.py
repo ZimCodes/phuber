@@ -10,7 +10,7 @@ class TestScraper:
         :return: None
         """
         total_links = 24
-        scraper = new_scraper("pornhub", "truth")
+        scraper = new_scraper("pornhub", "bright")
         scraper.start()
         with open("list.txt", 'r') as file:
             assert len(file.readlines()) == total_links

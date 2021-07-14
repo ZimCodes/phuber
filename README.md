@@ -1,7 +1,6 @@
 # Phuber
 
-**Phuber** allows you to retrieve video links primarily from Pornhub. *With recent changes, more sites
-will also be support
+**Phuber** allows you to retrieve video links primarily from Pornhub.
 
 For ease of use, try the command-line configurator for this tool [here](https://zimtools.xyz/phuber) 
 
@@ -64,6 +63,15 @@ Minimum length of videos. Choices: *[10,20,30]*
 **--max / --max-dur *duration***
 
 Maximum length of videos. Choices: *[10,20,30]*
+
+**--order**
+
+Changes the ordering of the videos in the search results. Choices: *[10,20,30]*. Default: *(by relevancy)*
+
+**--order-time**
+
+Changes the ordering of videos in search results by time. *Only available for `top` & `viewed` options*.
+Choices *[yearly, monthly, weekly, daily]*. Default: *(All Time)*
 
 ### Console Prints
 <hr>
