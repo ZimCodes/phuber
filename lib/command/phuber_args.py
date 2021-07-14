@@ -46,9 +46,9 @@ class PhuberArgs:
         self.builder.add_sub_arg(1, "pornhub", '--max', '--max-dur', type=int, choices=[10, 20, 30],
                                  help='Maximum length of videos')
         self.builder.add_sub_arg(1, "pornhub", '--order', choices=['recent', 'viewed', 'top', 'longest'],
-                                 help="Changes the ordering of the videos in the search results. Default: (by relevancy)")
+                                 help="Changes ordering of videos in search results. Default: (by relevancy)")
         self.builder.add_sub_arg(1, "pornhub", '--order-time', choices=['yearly', 'monthly', 'weekly', 'daily'],
-                                 help="Changes the ordering of videos in search results by time. *Only available for 'top' & 'viewed' options."
+                                 help="Changes ordering of videos in search results by time. *Only applicable for 'top' & 'viewed' options."
                                       "Default (by all time)")
 
 

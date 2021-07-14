@@ -66,11 +66,11 @@ Maximum length of videos. Choices: *[10,20,30]*
 
 **--order**
 
-Changes the ordering of the videos in the search results. Choices: *[10,20,30]*. Default: *(by relevancy)*
+Changes ordering of videos in search results. Choices: *[10,20,30]*. Default: *(by relevancy)*
 
 **--order-time**
 
-Changes the ordering of videos in search results by time. *Only available for `top` & `viewed` options*.
+Changes ordering of videos in search results by time. *Only applicable for `top` & `viewed` options*.
 Choices *[yearly, monthly, weekly, daily]*. Default: *(All Time)*
 
 ### Console Prints
@@ -85,7 +85,7 @@ python phuber.py pornhub --category-list
 ```
 **-v / --verbose**
 
-Prints out the video titles of what your scrapping to console output
+Prints out the video titles of what you're scraping to console output
 
 ## Category Keywords List
 **The keywords are the characters **NOT** in parenthesis.* 
