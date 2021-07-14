@@ -3,3 +3,6 @@
 !requirements.txt
 venv/
 __pycache__/
+build/
+dist/
+*.spec
