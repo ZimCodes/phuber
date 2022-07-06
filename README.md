@@ -130,7 +130,7 @@ Show only HD videos.
 **--loc *location***
 
 Changes ordering of videos based on location around the world. *Only applicable during 
-category search with `hottest` or `viewed` used. *Default: *(auto)*
+category search with `hottest` or `viewed` used. *See `--location-list`. * Default: *(auto)* 
 
 ---
 
@@ -162,6 +162,10 @@ List of all available categories.
 ```
 phuber pornhub --category-list
 ```
+
+**--location-list**
+
+List of all available locations.
 
 ---
 

@@ -1,4 +1,5 @@
 from .checker import Checker
+from .data import Data
 import os, requests
 from bs4 import BeautifulSoup
 from .configurator import Configurator
@@ -27,7 +28,7 @@ class Scraper(AbstractScraper):
                     result += f'/incategories/{include[1:] if include.startswith("!") else include}' \
                               f'/{self.args.search[1:]}?'
                 else:
-                    result += f"?c={Checker.category_codes[self.args.search]}"
+                    result += f"?c={Data.category_codes[self.args.search]}"
             else:
                 result = '/video'
                 if self.args.include:
@@ -35,7 +36,7 @@ class Scraper(AbstractScraper):
                     result += f'/incategories/{include[1:] if include.startswith("!") else include}/' \
                               f'{self.args.search}?'
                 else:
-                    result += f"?c={Checker.category_codes[self.args.search]}"
+                    result += f"?c={Data.category_codes[self.args.search]}"
         else:
             if self.args.search.startswith("!"):
                 result = f'/gay/video/search?search={self.args.search.replace(" ", "+")[1:]}'
@@ -75,9 +76,9 @@ class Scraper(AbstractScraper):
                       Configurator.duration_filter(self.args.min, self.args.max) \
                       + Configurator.search_filters_cat(self.args.premium_only, self.args.include,
                                                         self.args.exclude, self.args.cat_search,
-                                                        Checker.category_codes) \
+                                                        Data.category_codes) \
                       + Configurator.order_filter(self.args.order, self.args.order_time,
-                                                  self.args.loc) \
+                                                  Data.location_codes[self.args.loc]) \
                       + Configurator.promotion_filter(self.args.promo) + Configurator.hd_filter(
                     self.args.hd)
                 print(url)
@@ -180,6 +181,10 @@ class Scraper(AbstractScraper):
         # If specified, show all categories
         if self.args.category_list is True:
             Checker.print_categories()
+            return
+
+        if self.args.location_list is True:
+            Checker.print_locations()
             return
 
         # Must have search term to proceed scraping

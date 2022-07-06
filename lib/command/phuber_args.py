@@ -50,7 +50,9 @@ class PhuberArgs:
         self.builder.add_sub_arg(1, sub_name, '-e', '--exclude',
                                  help='the categories to remove from the search(max=10). Example: "cat1,cat2,cat3,cat4"')
         self.builder.add_sub_arg(1, sub_name, '--category-list', action="store_true",
-                                 help='list of all available categories to filter through "(what keyword mean)"')
+                                 help='list of all available categories.')
+        self.builder.add_sub_arg(1, sub_name, '--location-list', action="store_true",
+                                 help='list of all available locations.')
         self.builder.add_sub_arg(1, sub_name, '--prod', choices=['home', 'pro'],
                                  help="production of the video")
         self.builder.add_sub_arg(1, sub_name, '--min', '--min-dur', type=int, choices=[10, 20, 30],
