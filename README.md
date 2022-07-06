@@ -44,13 +44,13 @@ Retrieves video links for search terms *happiness and joy* in the gay category, 
 excludes group and bear categories while also including the feet category:
 
 ```commandline
-python phuber.py pornhub --exclude="!group,!bear" --include="!feet" "!happiness and joy" 
+phuber pornhub --exclude="!group,!bear" --include="!feet" "!happiness and joy" 
 ```
 
 Retrieves video links that are both in the *solo-female* & *funny* categories:
 
 ```commandline
-python phuber.py pornhub --cat-search --include="funny" "solo-female" 
+phuber pornhub --cat-search --include="funny" "solo-female" 
 ```
 
 ---
@@ -94,7 +94,7 @@ The category to filter into the search. *_See `--category-list`_
 The category(ies) to remove from the search **(max=10)**. *_See `--category-list`_
 
 ``` 
-python phuber.py pornhub -e "cat1,cat2,cat3,cat4" "search term"
+phuber pornhub -e "cat1,cat2,cat3,cat4" "search term"
 ```
 
 **--prod *"type"***
@@ -141,7 +141,7 @@ category search with `hottest` or `viewed` used. *Default: *(auto)*
 The login credentials to use when scraping premium pages.  <username:password> format
 
 ```commandline
-python phuber.py pornhub --premium "username:password" "search term"
+phuber pornhub --premium "username:password" "search term"
 ```
 
 **--premium-only**
@@ -160,7 +160,7 @@ Prints out the video titles of what you're scraping to console output
 List of all available categories.
 
 ```
-python phuber.py pornhub --category-list
+phuber pornhub --category-list
 ```
 
 ---
