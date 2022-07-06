@@ -35,13 +35,13 @@ category, see `--include,-i`. Also to enable *Category search*, see `--cat-searc
 
 #### Gay Support
 
-Phuber now supports searching links in the gay category. To do this, start you search term and/or
+Phuber now supports searching links in the gay category. To do this, start your search term and/or
 category choices with `!`.
 
 #### Demonstration
 
 Retrieves video links for search terms *happiness and joy* in the gay category, which
-excludes group and bear categories while also including the feet category:
+excludes the *group* and *bear* categories while also including the *feet* category:
 
 ```commandline
 phuber pornhub --exclude="!group,!bear" --include="!feet" "!happiness and joy" 
