@@ -13,6 +13,36 @@ class Scraper(AbstractScraper):
         self.args = Checker(args).args
         return self
 
+    def __setup_path(self):
+        """
+        Create a valid URL path leading to the correct source of videos
+        :return: correct path to videos
+        """
+        result = ""
+        if self.args.cat_search:
+            if self.args.search.startswith("!"):
+                result = '/gay/video'
+                if self.args.include:
+                    include = self.args.include
+                    result += f'/incategories/{include[1:] if include.startswith("!") else include}' \
+                              f'/{self.args.search[1:]}?'
+                else:
+                    result += f"?c={Checker.category_codes[self.args.search]}"
+            else:
+                result = '/video'
+                if self.args.include:
+                    include = self.args.include
+                    result += f'/incategories/{include[1:] if include.startswith("!") else include}/' \
+                              f'{self.args.search}?'
+                else:
+                    result += f"?c={Checker.category_codes[self.args.search]}"
+        else:
+            if self.args.search.startswith("!"):
+                result = f'/gay/video/search?search={self.args.search.replace(" ", "+")[1:]}'
+            else:
+                result = f'/video/search?search={self.args.search.replace(" ", "+")}'
+        return result
+
     def scrape_web(self, session, domain):
         """
         Scrape video links from search results.
@@ -30,27 +60,34 @@ class Scraper(AbstractScraper):
         max: maximum length of the videos
         :return: None
         """
-        if os.path.exists(self.args.listname):
-            os.remove(self.args.listname)
+        if os.path.exists(self.args.list_name):
+            os.remove(self.args.list_name)
 
-        with open(self.args.listname, 'w') as full_list:
-            search_prefix = '/video/search?search='
-            search = self.args.search.replace(" ", "+")
+        with open(self.args.list_name, 'w') as full_list:
+
             page_number_cat = '&page='
-            sub_url = domain + search_prefix + search + page_number_cat
+            sub_url = domain + self.__setup_path() + page_number_cat
 
             page_range = range(1, self.args.pages + 1)
 
             for current_page in page_range:
                 url = sub_url + str(current_page) + Configurator.production_filter(self.args.prod) + \
                       Configurator.duration_filter(self.args.min, self.args.max) \
-                      + Configurator.search_filters_cat(self.args.premium_only, self.args.include, self.args.exclude,
+                      + Configurator.search_filters_cat(self.args.premium_only, self.args.include,
+                                                        self.args.exclude, self.args.cat_search,
                                                         Checker.category_codes) \
-                      + Configurator.order_filter(self.args.order, self.args.order_time)
+                      + Configurator.order_filter(self.args.order, self.args.order_time,
+                                                  self.args.loc) \
+                      + Configurator.promotion_filter(self.args.promo) + Configurator.hd_filter(
+                    self.args.hd)
                 print(url)
                 req = session.get(url)
                 soup = BeautifulSoup(req.text, 'html.parser')
-                found_links = soup.select("div.thumbnail-info-wrapper span.title")
+                found_links = soup.select("ul#videoSearchResult div.thumbnail-info-wrapper "
+                                          "span.title, ul#videoCategory "
+                                          "div.thumbnail-info-wrapper "
+                                          "span.title, ul#incategoryVideos "
+                                          "div.thumbnail-info-wrapper span.title")
                 vid_urls = []
 
                 for current_link in found_links:
@@ -147,6 +184,7 @@ class Scraper(AbstractScraper):
 
         # Must have search term to proceed scraping
         if not self.args.search:
+            print("Search keywords were not provided!")
             return
 
         session = requests.Session()
@@ -156,6 +194,3 @@ class Scraper(AbstractScraper):
             self.__pornhub(session)
 
         session.close()
-
-
-

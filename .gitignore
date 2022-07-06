@@ -1,7 +1,7 @@
 .idea/
 *.txt
 !requirements.txt
-venv/
+env/
 __pycache__/
 build/
 dist/
