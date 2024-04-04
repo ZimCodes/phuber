@@ -2,7 +2,7 @@
 
 **Phuber** allows you to retrieve video links primarily from Pornhub.
 
-For ease of use, try the command-line configurator for this tool [here](https://zimtools.xyz/phuber)
+For ease of use, try the command-line configurator for this tool [here](https://zimtools.vercel.app/phuber)
 
 # Table of Contents
 
